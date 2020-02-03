@@ -21,16 +21,14 @@ function getAccelCurve(stepSize,max, start, end, model) {
 
 function getFlowLine(height, length) {
     let data = [];
-    for(let i = 0; i < length; i++) {
+    for(let i = 0; i <= length; i++) {
         data.push(height);
     }
     return data;
 }
 
 function drawCharts(trafficModel) {
-    console.log("CHARTS");
-    console.log(trafficModel);
-    var x1Config = {
+    var NS_Left_Config = {
         type: 'line',
 
         data: {
@@ -40,12 +38,12 @@ function drawCharts(trafficModel) {
                 fill: false,
                 backgroundColor: window.chartColors.blue,
                 borderColor: window.chartColors.blue,
-                data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.NS_Green_Start, trafficModel.NS_Green_End, trafficModel),
+                data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.NS_Left_Start, trafficModel.NS_Left_End, trafficModel),
             }, {
                 label: 'In Flow',
                 backgroundColor: window.chartColors.red,
                 borderColor: window.chartColors.red,
-                data: getFlowLine( trafficModel.X1, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+                data: getFlowLine( trafficModel.NS_rate * trafficModel.leftFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
                 fill: true,
             }]
         },
@@ -53,7 +51,7 @@ function drawCharts(trafficModel) {
             responsive: true,
             title: {
                 display: true,
-                text: 'Intersection Traffic X1'
+                text: 'Intersection Traffic N / S Left'
             },
             tooltips: {
                 mode: 'index',
@@ -82,30 +80,216 @@ function drawCharts(trafficModel) {
                     display: true,
                     ticks: {
                         beginAtZero: true,
-                        max: trafficModel.peakFlow + 10,
+                        max: trafficModel.peakFlow,
                         stepSize: 10
                     }
                 }]
             }
         }
     };
-    let ctx = document.getElementById('x1Canvas').getContext('2d');
-    window.x1Chart = new Chart(ctx, x1Config);
+
+    var NS_Green_Config = {
+        type: 'line',
+
+        data: {
+            labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
+            datasets: [{
+                label: 'Out Flow',
+                fill: false,
+                backgroundColor: window.chartColors.blue,
+                borderColor: window.chartColors.blue,
+                data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.NS_Green_Start, trafficModel.NS_Green_End, trafficModel),
+            }, {
+                label: 'In Flow',
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
+                data: getFlowLine( trafficModel.NS_rate * trafficModel.straightFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Intersection Traffic N / S Green'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                x: {
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time (seconds)'
+                    }
+                },
+                y: {
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Traffic Flow (cars/second)'
+                    }
+                },
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        beginAtZero: true,
+                        max: trafficModel.peakFlow,
+                        stepSize: 10
+                    }
+                }]
+            }
+        }
+    };
+
+    var EW_Left_Config = {
+        type: 'line',
+
+        data: {
+            labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
+            datasets: [{
+                label: 'Out Flow',
+                fill: false,
+                backgroundColor: window.chartColors.blue,
+                borderColor: window.chartColors.blue,
+                data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.EW_Left_Start, trafficModel.EW_Left_End, trafficModel),
+            }, {
+                label: 'In Flow',
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
+                data: getFlowLine( trafficModel.EW_rate * trafficModel.leftFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Intersection Traffic E / W Left'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                x: {
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time (seconds)'
+                    }
+                },
+                y: {
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Traffic Flow (cars/second)'
+                    }
+                },
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        beginAtZero: true,
+                        max: trafficModel.peakFlow,
+                        stepSize: 10
+                    }
+                }]
+            }
+        }
+    };
+
+    var EW_Green_Config = {
+        type: 'line',
+
+        data: {
+            labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
+            datasets: [{
+                label: 'Out Flow',
+                fill: false,
+                backgroundColor: window.chartColors.blue,
+                borderColor: window.chartColors.blue,
+                data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.EW_Green_Start, trafficModel.EW_Green_End, trafficModel),
+            }, {
+                label: 'In Flow',
+                backgroundColor: window.chartColors.red,
+                borderColor: window.chartColors.red,
+                data: getFlowLine( trafficModel.EW_rate * trafficModel.straightFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+                fill: true,
+            }]
+        },
+        options: {
+            responsive: true,
+            title: {
+                display: true,
+                text: 'Intersection Traffic E / W Green'
+            },
+            tooltips: {
+                mode: 'index',
+                intersect: false,
+            },
+            hover: {
+                mode: 'nearest',
+                intersect: true
+            },
+            scales: {
+                x: {
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Time (seconds)'
+                    }
+                },
+                y: {
+                    display: true,
+                    scaleLabel: {
+                        display: true,
+                        labelString: 'Traffic Flow (cars/second)'
+                    }
+                },
+                yAxes: [{
+                    display: true,
+                    ticks: {
+                        beginAtZero: true,
+                        max: trafficModel.peakFlow,
+                        stepSize: 10
+                    }
+                }]
+            }
+        }
+    };
+    let ns_left_ctx = document.getElementById('NS_Left_Canvas').getContext('2d');
+    window.ns_left_chart = new Chart(ns_left_ctx, NS_Left_Config);
+    let ns_green_ctx = document.getElementById('NS_Green_Canvas').getContext('2d');
+    window.ns_green_chart = new Chart(ns_green_ctx, NS_Green_Config);
+    let ew_left_ctx = document.getElementById('EW_Left_Canvas').getContext('2d');
+    window.ew_left_chart = new Chart(ew_left_ctx, EW_Left_Config);
+    let ew_green_ctx = document.getElementById('EW_Green_Canvas').getContext('2d');
+    window.ew_green_chart = new Chart(ew_green_ctx, EW_Green_Config);
 
 }
 
 function updateCharts(trafficModel) {
-    if(!window.x1Chart) {
+    if(!window.ns_green_chart) {
         drawCharts(trafficModel);
     } else {
-        window.x1Chart.data.datasets[0] = {
+        window.ns_green_chart.data.datasets[0] = {
             label: 'Out Flow',
             fill: false,
             backgroundColor: window.chartColors.blue,
             borderColor: window.chartColors.blue,
             data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.NS_Green_Start, trafficModel.NS_Green_End, trafficModel),
         };
-        window.x1Chart.update();
+        window.ns_green_chart.update();
     }
 
 }

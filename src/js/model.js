@@ -26,7 +26,7 @@ stepSize: number, chart step size
 private properties:
 don't make these, they get calculated from the other inputs as interim values
 NS_Rate: number greatest rate between X1 & X3
-EW_Rate: number greates rate between X2 &
+EW_Rate: number greates rate between X2 & X4
 
 NS_Green_Start: number, time in seconds when NS_Green_State starts
 NS_Green_End: number, time in seconds when NS_Green_State ends

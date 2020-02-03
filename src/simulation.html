@@ -19,84 +19,84 @@
 <script src="js/model.js" type="text/javascript"></script>
 <script src="js/simulation.js" type="text/javascript"></script>
 <body onload="startSimulation()">
-<div style="display: flex;flex-direction: row;">
-    <div style="width:75%;">
-        <canvas id="NS_Left_Canvas"></canvas>
+<div style="display: flex; flex-direction: row;">
+    <div style="display: flex;flex-direction: column;flex-grow: 1;">
+        <div style="width:75%;">
+            <canvas id="NS_Left_Canvas"></canvas>
+        </div>
+        <div style="width:75%;">
+            <canvas id="NS_Green_Canvas"></canvas>
+        </div>
+        <div style="width:75%;">
+            <canvas id="EW_Left_Canvas"></canvas>
+        </div>
+        <div style="width:75%;">
+            <canvas id="EW_Green_Canvas"></canvas>
+        </div>
     </div>
-    <div style="width:75%;">
-        <canvas id="NS_Green_Canvas"></canvas>
+    <div style="display: flex;flex-direction: column;flex-grow: 1;">
+        <h4>Enter input:</h4>
+        <div id="all_inputs">
+            <div id="variables">
+                X1 (cars/sec): <input type="number" id="input1" size="12" placeholder="X1 Flow" value="10">
+                <br><br>
+                X2 (cars/sec): <input type="number" id="input2" size="12" placeholder="X2 Flow" value="20">
+                <br/><br/>
+                X3 (cars/sec): <input type="number" id="input3" size="12" placeholder="X3 Flow" value="10">
+                <br/><br/>
+                X4 (cars/sec): <input type="number" id="input4" size="12" placeholder="X4 Flow" value="20">
+                <br><br>
+                Percentage of vehicles turning right:<input type="number" id="x1_R" size="12" placeholder="% Right" value="20">
+                <br><br>
+                Percentage of vehicles going straight:<input type="number" id="x1_S" size="12" placeholder="% Straight" value="60">
+                <br><br>
+                Percentage of vehicles turning left:<input type="number" id="x1_L" size="12" placeholder="% Left" value="20">
+                <br/>
+                <br>
+                <button type="button" onclick="submitClicked()">Verify Traffic Timings</button>
+                <button type="button" onclick="updateSim()">Update Charts</button>
+                <br/>
+            </div>
+            <hr width="450px" align="left"/>
+            <h4>Enter cycle time:</h4>
+            <div id="cycle_time">
+                Time Intervals: <br><br>
+                N/S Green (sec)<input type="number" id="state1" size="24" placeholder="N/S S+R Time" value="15"><br/><br/>
+                E/W Green (sec)<input type="number" id="state2" size="24" placeholder="E/W S+R Time" value="15"><br/><br/>
+                N/S Left Arrow (sec)<input type="number" id="state3" size="24" placeholder="N/S L Time" value="5"><br/><br/>
+                E/W Left Arrow (sec)<input type="number" id="state4" size="24" placeholder="E/W L Time" value="5"><br/><br/>
+            </div>
+            <p id="cycle_time_warning"></p>
+            <hr width="450px" align="left"/>
+            <div id="features">
+                <h4>Features</h4>
+                <input type="radio" name="features" id="feature1">Two-Car Collision - One lane closure <br>
+                <input type="radio" name="features" id="feature2">Multi-Car Collision - Two Lane closure <br>
+                <input type="radio" name="features" id="feature3">Construction <br>
+                <input type="radio" name="features" id="feature4">Snowy Weather <br>
+                <input type="radio" name="features" id="feature5">Rainy Weather <br>
+                <input type="radio" name="features" id="feature6">Lane Closed and Construction <br>
+            </div>
+        </div>
+        <div id="outputs">
+            <table id="output_table">
+                <tr>
+                    <th></th>
+                    <th>N/S Green</th>
+                    <th>N/S Left Arrow</th>
+                    <th>E/W Green</th>
+                    <th>E/W Left Arrow</th>
+                </tr>
+                <tr>
+                    <th>Was traffic stalled?</th>
+                    <td id="ns_g_valid"></td>
+                    <td id="ns_l_valid"></td>
+                    <td id="ew_g_valid"></td>
+                    <td id="ew_l_valid"></td>
+                </tr>
+            </table>
+        </div>
     </div>
 </div>
-<div style="display: flex;flex-direction: row;">
-    <div style="width:75%;">
-        <canvas id="EW_Left_Canvas"></canvas>
-    </div>
-    <div style="width:75%;">
-        <canvas id="EW_Green_Canvas"></canvas>
-    </div>
-</div>
-
-<h4>Enter input:</h4>
-<div id="all_inputs">
-    <div id="variables">
-        X1 (cars/sec): <input type="number" id="input1" size="12" placeholder="X1 Flow" value="10">
-        <br><br>
-        X2 (cars/sec): <input type="number" id="input2" size="12" placeholder="X2 Flow" value="20">
-        <br/><br/>
-        X3 (cars/sec): <input type="number" id="input3" size="12" placeholder="X3 Flow" value="10">
-        <br/><br/>
-        X4 (cars/sec): <input type="number" id="input4" size="12" placeholder="X4 Flow" value="20">
-        <br><br>
-        Percentage of vehicles turning right:<input type="number" id="x1_R" size="12" placeholder="% Right" value="20">
-        <br><br>
-        Percentage of vehicles going straight:<input type="number" id="x1_S" size="12" placeholder="% Straight" value="60">
-        <br><br>
-        Percentage of vehicles turning left:<input type="number" id="x1_L" size="12" placeholder="% Left" value="20">
-        <br/>
-        <br>
-        <button type="button" onclick="submitClicked()">Verify Traffic Timings</button>
-        <button type="button" onclick="updateSim()">Update Charts</button>
-        <br/>
-    </div>
-    <hr width="450px" align="left"/>
-    <h4>Enter cycle time:</h4>
-    <div id="cycle_time">
-        Time Intervals: <br><br>
-        N/S Green (sec)<input type="number" id="state1" size="24" placeholder="N/S S+R Time" value="15"><br/><br/>
-        E/W Green (sec)<input type="number" id="state2" size="24" placeholder="E/W S+R Time" value="15"><br/><br/>
-        N/S Left Arrow (sec)<input type="number" id="state3" size="24" placeholder="N/S L Time" value="5"><br/><br/>
-        E/W Left Arrow (sec)<input type="number" id="state4" size="24" placeholder="E/W L Time" value="5"><br/><br/>
-    </div>
-    <p id="cycle_time_warning"></p>
-    <hr width="450px" align="left"/>
-    <div id="features">
-        <h4>Features</h4>
-        <input type="radio" name="features" id="feature1">Two-Car Collision - One lane closure <br>
-        <input type="radio" name="features" id="feature2">Multi-Car Collision - Two Lane closure <br>
-        <input type="radio" name="features" id="feature3">Construction <br>
-        <input type="radio" name="features" id="feature4">Snowy Weather <br>
-        <input type="radio" name="features" id="feature5">Rainy Weather <br>
-        <input type="radio" name="features" id="feature6">Lane Closed and Construction <br>
-    </div>
-</div>
-<div id="outputs">
-    <table id="output_table">
-        <tr>
-            <th></th>
-            <th>N/S Green</th>
-            <th>N/S Left Arrow</th>
-            <th>E/W Green</th>
-            <th>E/W Left Arrow</th>
-        </tr>
-        <tr>
-            <th>Was traffic stalled?</th>
-            <td id="ns_g_valid"></td>
-            <td id="ns_l_valid"></td>
-            <td id="ew_g_valid"></td>
-            <td id="ew_l_valid"></td>
-        </tr>
-    </table>
-</div>
-
 </body>
 </html>

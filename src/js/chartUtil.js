@@ -27,26 +27,87 @@ function getFlowLine(height, length) {
     return data;
 }
 
+function getNSLeftData(trafficModel) {
+    return {
+        labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
+        datasets: [{
+            label: 'Out Flow',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.NS_Left_Start, trafficModel.NS_Left_End, trafficModel),
+        }, {
+            label: 'In Flow',
+            backgroundColor: window.chartColors.red,
+            borderColor: window.chartColors.red,
+            data: getFlowLine( trafficModel.NS_rate * trafficModel.leftFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+            fill: true,
+        }]
+    };
+}
+
+function getNSGreenData(trafficModel) {
+    return {
+        labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
+        datasets: [{
+            label: 'Out Flow',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.NS_Green_Start, trafficModel.NS_Green_End, trafficModel),
+        }, {
+            label: 'In Flow',
+            backgroundColor: window.chartColors.red,
+            borderColor: window.chartColors.red,
+            data: getFlowLine( trafficModel.NS_rate * trafficModel.straightFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+            fill: true,
+        }]
+    };
+}
+
+function getEWLeftData(trafficModel) {
+    return {
+        labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
+        datasets: [{
+            label: 'Out Flow',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.EW_Left_Start, trafficModel.EW_Left_End, trafficModel),
+        }, {
+            label: 'In Flow',
+            backgroundColor: window.chartColors.red,
+            borderColor: window.chartColors.red,
+            data: getFlowLine( trafficModel.EW_rate * trafficModel.leftFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+            fill: true,
+        }]
+    };
+}
+
+function getEWGreenData(trafficModel) {
+    return {
+        labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
+        datasets: [{
+            label: 'Out Flow',
+            fill: false,
+            backgroundColor: window.chartColors.blue,
+            borderColor: window.chartColors.blue,
+            data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.EW_Green_Start, trafficModel.EW_Green_End, trafficModel),
+        }, {
+            label: 'In Flow',
+            backgroundColor: window.chartColors.red,
+            borderColor: window.chartColors.red,
+            data: getFlowLine( trafficModel.EW_rate * trafficModel.straightFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+            fill: true,
+        }]
+    };
+}
+
 function drawCharts(trafficModel) {
     var NS_Left_Config = {
         type: 'line',
 
-        data: {
-            labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
-            datasets: [{
-                label: 'Out Flow',
-                fill: false,
-                backgroundColor: window.chartColors.blue,
-                borderColor: window.chartColors.blue,
-                data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.NS_Left_Start, trafficModel.NS_Left_End, trafficModel),
-            }, {
-                label: 'In Flow',
-                backgroundColor: window.chartColors.red,
-                borderColor: window.chartColors.red,
-                data: getFlowLine( trafficModel.NS_rate * trafficModel.leftFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
-                fill: true,
-            }]
-        },
+        data: getNSLeftData(trafficModel),
         options: {
             responsive: true,
             title: {
@@ -91,22 +152,7 @@ function drawCharts(trafficModel) {
     var NS_Green_Config = {
         type: 'line',
 
-        data: {
-            labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
-            datasets: [{
-                label: 'Out Flow',
-                fill: false,
-                backgroundColor: window.chartColors.blue,
-                borderColor: window.chartColors.blue,
-                data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.NS_Green_Start, trafficModel.NS_Green_End, trafficModel),
-            }, {
-                label: 'In Flow',
-                backgroundColor: window.chartColors.red,
-                borderColor: window.chartColors.red,
-                data: getFlowLine( trafficModel.NS_rate * trafficModel.straightFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
-                fill: true,
-            }]
-        },
+        data: getNSGreenData(trafficModel),
         options: {
             responsive: true,
             title: {
@@ -151,22 +197,7 @@ function drawCharts(trafficModel) {
     var EW_Left_Config = {
         type: 'line',
 
-        data: {
-            labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
-            datasets: [{
-                label: 'Out Flow',
-                fill: false,
-                backgroundColor: window.chartColors.blue,
-                borderColor: window.chartColors.blue,
-                data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.EW_Left_Start, trafficModel.EW_Left_End, trafficModel),
-            }, {
-                label: 'In Flow',
-                backgroundColor: window.chartColors.red,
-                borderColor: window.chartColors.red,
-                data: getFlowLine( trafficModel.EW_rate * trafficModel.leftFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
-                fill: true,
-            }]
-        },
+        data: getEWLeftData(trafficModel),
         options: {
             responsive: true,
             title: {
@@ -211,22 +242,7 @@ function drawCharts(trafficModel) {
     var EW_Green_Config = {
         type: 'line',
 
-        data: {
-            labels: getLabels(trafficModel.stepSize, trafficModel.getTotalCycleTime()),
-            datasets: [{
-                label: 'Out Flow',
-                fill: false,
-                backgroundColor: window.chartColors.blue,
-                borderColor: window.chartColors.blue,
-                data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.EW_Green_Start, trafficModel.EW_Green_End, trafficModel),
-            }, {
-                label: 'In Flow',
-                backgroundColor: window.chartColors.red,
-                borderColor: window.chartColors.red,
-                data: getFlowLine( trafficModel.EW_rate * trafficModel.straightFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
-                fill: true,
-            }]
-        },
+        data: getEWGreenData(trafficModel),
         options: {
             responsive: true,
             title: {
@@ -282,14 +298,15 @@ function updateCharts(trafficModel) {
     if(!window.ns_green_chart) {
         drawCharts(trafficModel);
     } else {
-        window.ns_green_chart.data.datasets[0] = {
-            label: 'Out Flow',
-            fill: false,
-            backgroundColor: window.chartColors.blue,
-            borderColor: window.chartColors.blue,
-            data: getAccelCurve(trafficModel.stepSize, trafficModel.getTotalCycleTime(), trafficModel.NS_Green_Start, trafficModel.NS_Green_End, trafficModel),
-        };
+        window.ns_left_chart.data = getNSLeftData(trafficModel);
+        window.ns_green_chart.data = getNSGreenData(trafficModel);
+        window.ew_left_chart.data = getEWLeftData(trafficModel);
+        window.ew_green_chart.data = getEWGreenData(trafficModel);
+
+        window.ns_left_chart.update();
         window.ns_green_chart.update();
+        window.ew_left_chart.update();
+        window.ew_green_chart.update();
     }
 
 }

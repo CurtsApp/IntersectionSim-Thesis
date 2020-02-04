@@ -80,7 +80,7 @@ class TrafficModel {
         this.rightFlow = MI.rightFlow;
         this.leftFlow = MI.leftFlow;
         
-        this.environmentalModifer = MI.environmentModifer;
+        this.environmentModifer = MI.environmentModifer;
 
 
         this.NS_Left_Start = 0;
@@ -101,12 +101,11 @@ class TrafficModel {
         return  2 * this.peakFlow / Math.PI * Math.atan(Math.PI * (time - this.reactionTime) / this.timeToPeak)
     }
 
-
+    
 // time in seconds
     getAccelIntegralAtTime(time) {
-        return 2 * this.peakFlow * (Math.PI * time * Math.atan(Math.PI * time / this.timeToPeak) - 10 * Math.log(Math.pow(Math.PI, 2) * Math.pow(time, 2) + Math.pow(this.timeToPeak, 2))) / Math.pow(Math.PI, 2);
+        return this.peakFlow * (2 * Math.PI * time * Math.atan(Math.PI * time / this.timeToPeak) - (this.timeToPeak * Math.log(Math.pow(Math.PI, 2) * Math.pow(time, 2) + Math.pow(this.timeToPeak, 2)))) / Math.pow(Math.PI, 2);
     }
-
 // time in seconds, this is the top of our integral
     getTotalCarOnGreenCycle(time) {
         if (time < this.reactionTime) {
@@ -114,6 +113,8 @@ class TrafficModel {
         }
         time = time - this.reactionTime;
 
+        console.log(this.getAccelIntegralAtTime(time));
+        console.log(this.getAccelIntegralAtTime(0));
         // Integral is from a to b is integral(b) - integral(a). In our case it always starts at 0 to our elapsed time
         return this.environmentModifer * (this.getAccelIntegralAtTime(time) - this.getAccelIntegralAtTime(0));
 

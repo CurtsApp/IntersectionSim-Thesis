@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
 
     <title>SER415 Simulation</title>
-    <!-- <link rel="stylesheet" href="simulation.css"> -->
+    <link rel="stylesheet" href="css/sim.css">
     <style>
         canvas{
             -moz-user-select: none;
@@ -21,17 +21,69 @@
 <body onload="startSimulation()">
 <div style="display: flex; flex-direction: row;">
     <div style="display: flex;flex-direction: column;flex-grow: 1; align-content: center">
-        <div style="width:90%;">
-            <canvas id="NS_Left_Canvas"></canvas>
+        <div style="display: flex;flex-direction: row; flex: 1;align-items: center">
+            <div style="width:90%;">
+                <canvas id="NS_Left_Canvas"></canvas>
+            </div>
+            <table>
+                <caption>Cars</caption>
+                <tr>
+                    <th>In</th>
+                    <td id="ns_left_in">160</td>
+                </tr>
+                <tr>
+                    <th>Out</th>
+                    <td id="ns_left_out">190</td>
+                </tr>
+            </table>
         </div>
-        <div style="width:90%;">
-            <canvas id="NS_Green_Canvas"></canvas>
+        <div style="display: flex;flex-direction: row; flex: 1;align-items: center">
+            <div style="width:90%;">
+                <canvas id="NS_Green_Canvas"></canvas>
+            </div>
+            <table>
+                <caption>Cars</caption>
+                <tr>
+                    <th>In</th>
+                    <td id="ns_green_in">160</td>
+                </tr>
+                <tr>
+                    <th>Out</th>
+                    <td id="ns_green_out">190</td>
+                </tr>
+            </table>
         </div>
-        <div style="width:90%;">
-            <canvas id="EW_Left_Canvas"></canvas>
+        <div style="display: flex;flex-direction: row; flex: 1;align-items: center">
+            <div style="width:90%;">
+                <canvas id="EW_Left_Canvas"></canvas>
+            </div>
+            <table>
+                <caption>Cars</caption>
+                <tr>
+                    <th>In</th>
+                    <td id="ew_left_in">160</td>
+                </tr>
+                <tr>
+                    <th>Out</th>
+                    <td id="ew_left_out">190</td>
+                </tr>
+            </table>
         </div>
-        <div style="width:90%;">
-            <canvas id="EW_Green_Canvas"></canvas>
+        <div style="display: flex;flex-direction: row; flex: 1;align-items: center">
+            <div style="width:90%;">
+                <canvas id="EW_Green_Canvas"></canvas>
+            </div>
+            <table>
+                <caption>Cars</caption>
+                <tr>
+                    <th>In</th>
+                    <td id="ew_green_in">160</td>
+                </tr>
+                <tr>
+                    <th>Out</th>
+                    <td id="ew_green_out">190</td>
+                </tr>
+            </table>
         </div>
     </div>
     <div style="display: flex;flex-direction: column;flex-shrink: 1;background-color: #dcdcdc">
@@ -77,24 +129,6 @@
                 <input type="radio" name="features" id="feature5">Rainy Weather <br>
                 <input type="radio" name="features" id="feature6">Lane Closed and Construction <br>
             </div>
-        </div>
-        <div id="outputs">
-            <table id="output_table">
-                <tr>
-                    <th></th>
-                    <th>N/S Green</th>
-                    <th>N/S Left Arrow</th>
-                    <th>E/W Green</th>
-                    <th>E/W Left Arrow</th>
-                </tr>
-                <tr>
-                    <th>Was traffic stalled?</th>
-                    <td id="ns_g_valid"></td>
-                    <td id="ns_l_valid"></td>
-                    <td id="ew_g_valid"></td>
-                    <td id="ew_l_valid"></td>
-                </tr>
-            </table>
         </div>
     </div>
 </div>

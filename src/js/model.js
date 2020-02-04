@@ -79,6 +79,7 @@ class TrafficModel {
         this.straightFlow = MI.straightFlow;
         this.rightFlow = MI.rightFlow;
         this.leftFlow = MI.leftFlow;
+        this.greenFlow = this.straightFlow > this.rightFlow ? this.straightFlow : this.rightFlow;
         
         this.environmentModifer = MI.environmentModifer;
 
@@ -101,7 +102,7 @@ class TrafficModel {
         return  2 * this.peakFlow / Math.PI * Math.atan(Math.PI * (time - this.reactionTime) / this.timeToPeak)
     }
 
-    
+
 // time in seconds
     getAccelIntegralAtTime(time) {
         return this.peakFlow * (2 * Math.PI * time * Math.atan(Math.PI * time / this.timeToPeak) - (this.timeToPeak * Math.log(Math.pow(Math.PI, 2) * Math.pow(time, 2) + Math.pow(this.timeToPeak, 2)))) / Math.pow(Math.PI, 2);

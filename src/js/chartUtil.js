@@ -59,7 +59,7 @@ function getNSGreenData(trafficModel) {
             label: 'In Flow',
             backgroundColor: window.chartColors.red,
             borderColor: window.chartColors.red,
-            data: getFlowLine( trafficModel.NS_rate * trafficModel.straightFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+            data: getFlowLine( trafficModel.NS_rate * trafficModel.greenFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
             fill: true,
         }]
     };
@@ -97,7 +97,7 @@ function getEWGreenData(trafficModel) {
             label: 'In Flow',
             backgroundColor: window.chartColors.red,
             borderColor: window.chartColors.red,
-            data: getFlowLine( trafficModel.EW_rate * trafficModel.straightFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
+            data: getFlowLine( trafficModel.EW_rate * trafficModel.greenFlow, trafficModel.getTotalCycleTime() / trafficModel.stepSize),
             fill: true,
         }]
     };

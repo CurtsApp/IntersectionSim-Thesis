@@ -11,12 +11,22 @@ function submitClicked() {
         alert("Percentages do not add up to 100 percent, please try again");
     else {
         let trafficModel = getTrafficModelFromInputs();
-        let verify = trafficModel.verify();
-        document.getElementById("ns_g_valid").innerHTML = verify.NS_Green ? "No" : "Yes";
-        document.getElementById("ns_l_valid").innerHTML = verify.NS_Left  ? "No" : "Yes";
-        document.getElementById("ew_g_valid").innerHTML = verify.EW_Green ? "No" : "Yes";
-        document.getElementById("ew_l_valid").innerHTML = verify.EW_Left  ? "No" : "Yes";
+
     }
+}
+
+function updateFlowAmounts(trafficModel) {
+    document.getElementById("ns_left_in").innerHTML = (trafficModel.NS_rate * trafficModel.leftFlow * trafficModel.getTotalCycleTime()).toFixed(0).toString();
+    document.getElementById("ns_left_out").innerHTML = (trafficModel.getTotalCarOnGreenCycle(trafficModel.NS_Left)).toFixed(0).toString();
+
+    document.getElementById("ns_green_in").innerHTML = (trafficModel.NS_rate * trafficModel.greenFlow * trafficModel.getTotalCycleTime()).toFixed(0).toString();
+    document.getElementById("ns_green_out").innerHTML = (trafficModel.getTotalCarOnGreenCycle(trafficModel.NS_Green)).toFixed(0).toString();
+
+    document.getElementById("ew_left_in").innerHTML = (trafficModel.EW_rate * trafficModel.leftFlow * trafficModel.getTotalCycleTime()).toFixed(0).toString();
+    document.getElementById("ew_left_out").innerHTML = (trafficModel.getTotalCarOnGreenCycle(trafficModel.EW_Left)).toFixed(0).toString();
+
+    document.getElementById("ew_green_in").innerHTML = (trafficModel.EW_rate * trafficModel.greenFlow * trafficModel.getTotalCycleTime()).toFixed(0).toString();
+    document.getElementById("ew_green_out").innerHTML = (trafficModel.getTotalCarOnGreenCycle(trafficModel.EW_Green)).toFixed(0).toString();
 }
 
 function getTrafficModelFromInputs() {
@@ -69,11 +79,12 @@ function updateSim() {
         document.getElementById("state4").value != null && document.getElementById("state4").value > 0) {
         document.getElementById("cycle_time_warning").innerText = null;
 
+        let trafficModel = getTrafficModelFromInputs()
+        updateFlowAmounts(trafficModel);
+        updateCharts(trafficModel);
     } else {
         document.getElementById("cycle_time_warning").innerText = "Error: Must supply cycle times.";
     }
-
-    updateCharts(getTrafficModelFromInputs());
 }
 
 /**

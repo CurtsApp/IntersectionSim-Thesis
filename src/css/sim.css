@@ -14,3 +14,7 @@ th {
 table {
     border-spacing: 5px;
 }
+
+.error {
+    color: #cc0000
+}

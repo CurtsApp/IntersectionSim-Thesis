@@ -16,8 +16,15 @@ function submitClicked() {
 }
 
 function updateFlowAmounts(trafficModel) {
-    document.getElementById("ns_left_in").innerHTML = (trafficModel.NS_rate * trafficModel.leftFlow * trafficModel.getTotalCycleTime()).toFixed(0).toString();
-    document.getElementById("ns_left_out").innerHTML = (trafficModel.getTotalCarOnGreenCycle(trafficModel.NS_Left)).toFixed(0).toString();
+    let ns_left_in = (trafficModel.NS_rate * trafficModel.leftFlow * trafficModel.getTotalCycleTime());
+    let ns_left_out = (trafficModel.getTotalCarOnGreenCycle(trafficModel.NS_Left));
+    document.getElementById("ns_left_in").innerHTML = ns_left_in.toFixed(0);
+    document.getElementById("ns_left_out").innerHTML = ns_left_out.toFixed(0);
+    if(ns_left_in > ns_left_out) {
+        document.getElementById("ns_left_in").classList.add('error');
+    } else {
+        document.getElementById("ns_left_in").classList.remove('error');
+    }
 
     document.getElementById("ns_green_in").innerHTML = (trafficModel.NS_rate * trafficModel.greenFlow * trafficModel.getTotalCycleTime()).toFixed(0).toString();
     document.getElementById("ns_green_out").innerHTML = (trafficModel.getTotalCarOnGreenCycle(trafficModel.NS_Green)).toFixed(0).toString();

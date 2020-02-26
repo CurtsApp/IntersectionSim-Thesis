@@ -103,152 +103,52 @@ function getEWGreenData(trafficModel) {
     };
 }
 
-function drawCharts(trafficModel) {
-    var NS_Left_Config = {
-        type: 'line',
+function getTrafficData(direction, trafficModel) {
+    switch(direction) {
+        case 'ns_green':
+            return getNSGreenData(trafficModel);
+        case 'ns_left':
+            return getNSLeftData(trafficModel);
+        case 'ew_green':
+            return getEWGreenData(trafficModel);
+        case 'ew_left':
+            return getEWLeftData(trafficModel);
+    }
+}
 
-        data: getNSLeftData(trafficModel),
-        options: {
-            responsive: true,
-            title: {
-                display: true,
-                text: 'Intersection Traffic N / S Left'
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                x: {
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Time (seconds)'
-                    }
-                },
-                y: {
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Traffic Flow (cars/second)'
-                    }
-                },
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        max: trafficModel.peakFlow,
-                        stepSize: 10
-                    }
-                }]
-            }
-        }
-    };
-
-    var NS_Green_Config = {
-        type: 'line',
-
-        data: getNSGreenData(trafficModel),
-        options: {
-            responsive: true,
-            title: {
+function getTrafficTitle(direction) {
+    switch(direction) {
+        case 'ns_green':
+            return {
                 display: true,
                 text: 'Intersection Traffic N / S Green'
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                x: {
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Time (seconds)'
-                    }
-                },
-                y: {
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Traffic Flow (cars/second)'
-                    }
-                },
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        max: trafficModel.peakFlow,
-                        stepSize: 10
-                    }
-                }]
-            }
-        }
-    };
-
-    var EW_Left_Config = {
-        type: 'line',
-
-        data: getEWLeftData(trafficModel),
-        options: {
-            responsive: true,
-            title: {
+            };
+        case 'ns_left':
+            return {
                 display: true,
-                text: 'Intersection Traffic E / W Left'
-            },
-            tooltips: {
-                mode: 'index',
-                intersect: false,
-            },
-            hover: {
-                mode: 'nearest',
-                intersect: true
-            },
-            scales: {
-                x: {
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Time (seconds)'
-                    }
-                },
-                y: {
-                    display: true,
-                    scaleLabel: {
-                        display: true,
-                        labelString: 'Traffic Flow (cars/second)'
-                    }
-                },
-                yAxes: [{
-                    display: true,
-                    ticks: {
-                        beginAtZero: true,
-                        max: trafficModel.peakFlow,
-                        stepSize: 10
-                    }
-                }]
-            }
-        }
-    };
-
-    var EW_Green_Config = {
-        type: 'line',
-
-        data: getEWGreenData(trafficModel),
-        options: {
-            responsive: true,
-            title: {
+                text: 'Intersection Traffic N / S Left'
+            };
+        case 'ew_green':
+            return {
                 display: true,
                 text: 'Intersection Traffic E / W Green'
-            },
+            };
+        case 'ew_left':
+            return {
+                display: true,
+                text: 'Intersection Traffic E / W Left'
+            };
+    }
+}
+
+function drawCharts(trafficModel) {
+    let chart_config = {
+        type: 'line',
+
+        data: getTrafficData('ns_green', trafficModel),
+        options: {
+            responsive: true,
+            title: getTrafficTitle('ns_green'),
             tooltips: {
                 mode: 'index',
                 intersect: false,
@@ -283,30 +183,21 @@ function drawCharts(trafficModel) {
             }
         }
     };
-    let ns_left_ctx = document.getElementById('NS_Left_Canvas').getContext('2d');
-    window.ns_left_chart = new Chart(ns_left_ctx, NS_Left_Config);
-    let ns_green_ctx = document.getElementById('NS_Green_Canvas').getContext('2d');
-    window.ns_green_chart = new Chart(ns_green_ctx, NS_Green_Config);
-    let ew_left_ctx = document.getElementById('EW_Left_Canvas').getContext('2d');
-    window.ew_left_chart = new Chart(ew_left_ctx, EW_Left_Config);
-    let ew_green_ctx = document.getElementById('EW_Green_Canvas').getContext('2d');
-    window.ew_green_chart = new Chart(ew_green_ctx, EW_Green_Config);
+
+    let ctx = document.getElementById('Chart_Canvas').getContext('2d');
+    window.traffic_chart = new Chart(ctx, chart_config);
 
 }
 
-function updateCharts(trafficModel) {
-    if(!window.ns_green_chart) {
+function updateCharts(trafficModel, direction) {
+    if(!window.traffic_chart) {
         drawCharts(trafficModel);
     } else {
-        window.ns_left_chart.data = getNSLeftData(trafficModel);
-        window.ns_green_chart.data = getNSGreenData(trafficModel);
-        window.ew_left_chart.data = getEWLeftData(trafficModel);
-        window.ew_green_chart.data = getEWGreenData(trafficModel);
+        window.traffic_chart.data = getTrafficData(direction, trafficModel);
+        window.traffic_chart.title = getTrafficTitle(direction);
 
-        window.ns_left_chart.update();
-        window.ns_green_chart.update();
-        window.ew_left_chart.update();
-        window.ew_green_chart.update();
+        window.traffic_chart.update();
+
     }
 
 }

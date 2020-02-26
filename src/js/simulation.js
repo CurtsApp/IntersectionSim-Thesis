@@ -79,7 +79,7 @@ function startSimulation() {
     updateSim();
 }
 
-function updateSim() {
+function updateSim(direction) {
     if (document.getElementById("state1").value != null && document.getElementById("state1").value > 0 &&
         document.getElementById("state2").value != null && document.getElementById("state2").value > 0 &&
         document.getElementById("state3").value != null && document.getElementById("state3").value > 0 &&
@@ -88,7 +88,7 @@ function updateSim() {
 
         let trafficModel = getTrafficModelFromInputs()
         updateFlowAmounts(trafficModel);
-        updateCharts(trafficModel);
+        updateCharts(trafficModel, direction);
     } else {
         document.getElementById("cycle_time_warning").innerText = "Error: Must supply cycle times.";
     }

@@ -20,27 +20,65 @@
 <script src="js/simulation.js" type="text/javascript"></script>
 <body onload="startSimulation()">
 <div style="display: flex;flex-direction: column;flex-grow: 1; align-content: center">
-    <div style="display: block;margin-left: auto;margin-right: auto; width: 70%;">
-        <img style="max-width: 100%;max-height: 100%" src="res/FancyIntersection.jpg">
-        <div style="background-color: #7ec699; border: 3px solid #000000;width: 80px;position: absolute; bottom: 0; left: 50%; text-align: center" >
-            <p><b>North (cars/sec)</b></p>
-            <input type="number" id="input1" size="6" value="10" style="width: 60px">
+    <div class="row" style="justify-content: center">
+        <div class="center-children">
+            <img class="centered-child backdrop" src="res/FancyIntersection.jpg">
+            <div class="overlay-field" style="bottom: 80px; left: 410px;" >
+                <div class="overlay-item">
+                    <p><b>North (cars/sec)</b></p>
+                </div>
+                <div class="overlay-item">
+                    <input type="number" id="input1" size="6" value="10" style="width: 80%">
+                </div>
+            </div>
+            <div class="overlay-field" style="bottom: 420px; left: 640px;" >
+                <div class="overlay-item">
+                    <p><b>East (cars/sec)</b></p>
+                </div>
+                <div class="overlay-item">
+                    <input type="number" id="input2" size="6" value="10" style="width: 80%">
+                </div>
+            </div>
+            <div class="overlay-field" style="bottom: 310px; left: 640px;" >
+                <div class="overlay-item">
+                    <p><b>Right Turn </b></p>
+                </div>
+                <div class="overlay-item">
+                    <input type="number" id="x1_R" size="6" value="20" min="0" max="100" step=1 style="width: 60%">
+                    <b>%</b>
+                </div>
+            </div>
+            <div class="overlay-field" style="bottom: 310px; left: 640px;" >
+                <div class="overlay-item">
+                    <p><b>Right Turn </b></p>
+                </div>
+                <div class="overlay-item">
+                    <input type="number" id="x1_R" size="6" value="20" min="0" max="100" step=1 style="width: 60%">
+                    <b>%</b>
+                </div>
+            </div>
+            <div class="overlay-field" style="bottom: 660px; left: 410px;" >
+                <div class="overlay-item">
+                    <p><b>Thru Traffic </b></p>
+                </div>
+                <div class="overlay-item">
+                    <input type="number" id="x1_R" size="6" value="20" min="0" max="100" step=1 style="width: 60%">
+                    <b>%</b>
+                </div>
+            </div>
         </div>
     </div>
 
-    <h4>Enter input:</h4>
     <div id="all_inputs">
         <div id="variables">
 
-            <br><br>
-            East (cars/sec): <input type="number" id="input2" size="12" value="20">
+
             <br/><br/>
             South (cars/sec): <input type="number" id="input3" size="12" value="10">
             <br/><br/>
             West (cars/sec): <input type="number" id="input4" size="12" value="20">
             <br><br>
-            Percentage of vehicles turning right:<input type="number" id="x1_R" size="12" placeholder="% Right"
-                                                        value="20">
+
             <br><br>
             Percentage of vehicles going straight:<input type="number" id="x1_S" size="12" placeholder="% Straight"
                                                          value="60">

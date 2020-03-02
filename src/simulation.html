@@ -81,6 +81,32 @@
                 <input type="number" id="input4" size="6" value="10" style="width: 80%">
             </div>
         </div>
+        <div class="overlay-table" style="bottom: 9px; left: 6px;">
+            Time Intervals: <br><br>
+            N/S Green (sec)<input type="number" id="state1" size="24" placeholder="N/S S+R Time" value="15"><br/><br/>
+            E/W Green (sec)<input type="number" id="state2" size="24" placeholder="E/W S+R Time" value="15"><br/><br/>
+            N/S Left Arrow (sec)<input type="number" id="state3" size="24" placeholder="N/S L Time" value="5"><br/><br/>
+            E/W Left Arrow (sec)<input type="number" id="state4" size="24" placeholder="E/W L Time" value="5"><br/><br/>
+        </div>
+        <div class="overlay-table" style="bottom: 9px; right: 6px;">
+            <div style="text-align: left;">
+                <b>Lane Availability</b><br>
+                <ul style="list-style-type: none">
+                    <li><input type="radio" name="lanes" id="allLanesOpen"><b>All Lanes Open</b></li>
+                    <li><input type="radio" name="lanes" id="quarterClosure"><b>Quarter Lane Closure</b></li>
+                    <li><input type="radio" name="lanes" id="halfClosure"><b>Half Lane Closure</b></li>
+                </ul>
+                <b>Weather</b>
+                <ul style="list-style-type: none">
+                    <li><input type="radio" name="weather" id="clearWeather"><b>Clear Weather</b></li>
+                    <li><input type="radio" name="weather" id="rainyWeather"><b>Rainy Weather</b></li>
+                    <li><input type="radio" name="weather" id="snowyWeather"><b>Snowy Weather</b></li>
+                </ul>
+
+
+            </div>
+
+        </div>
     </div>
 
 </div>
@@ -98,22 +124,12 @@
         <hr width="450px" align="left"/>
         <h4>Enter cycle time:</h4>
         <div id="cycle_time">
-            Time Intervals: <br><br>
-            N/S Green (sec)<input type="number" id="state1" size="24" placeholder="N/S S+R Time" value="15"><br/><br/>
-            E/W Green (sec)<input type="number" id="state2" size="24" placeholder="E/W S+R Time" value="15"><br/><br/>
-            N/S Left Arrow (sec)<input type="number" id="state3" size="24" placeholder="N/S L Time" value="5"><br/><br/>
-            E/W Left Arrow (sec)<input type="number" id="state4" size="24" placeholder="E/W L Time" value="5"><br/><br/>
+
         </div>
         <p id="cycle_time_warning"></p>
         <hr width="450px" align="left"/>
         <div id="features">
-            <h4>Features</h4>
-            <input type="radio" name="features" id="feature1">Two-Car Collision - One lane closure <br>
-            <input type="radio" name="features" id="feature2">Multi-Car Collision - Two Lane closure <br>
-            <input type="radio" name="features" id="feature3">Construction <br>
-            <input type="radio" name="features" id="feature4">Snowy Weather <br>
-            <input type="radio" name="features" id="feature5">Rainy Weather <br>
-            <input type="radio" name="features" id="feature6">Lane Closed and Construction <br>
+
         </div>
     </div>
     <div style="display: flex;flex-direction: row; flex: 1;align-items: center">

@@ -52,7 +52,7 @@
                 <p><b>Thru Traffic </b></p>
             </div>
             <div class="overlay-item">
-                <input type="number" id="x1_S" size="6" value="20" min="0" max="100" step=1 style="width: 60%">
+                <input type="number" id="x1_S" size="6" value="60" min="0" max="100" step=1 style="width: 60%">
                 <b>%</b>
             </div>
         </div>
@@ -82,23 +82,24 @@
             </div>
         </div>
         <div class="overlay-table" style="bottom: 9px; left: 6px;">
-            Time Intervals: <br><br>
-            N/S Green (sec)<input type="number" id="state1" size="24" placeholder="N/S S+R Time" value="15"><br/><br/>
-            E/W Green (sec)<input type="number" id="state2" size="24" placeholder="E/W S+R Time" value="15"><br/><br/>
-            N/S Left Arrow (sec)<input type="number" id="state3" size="24" placeholder="N/S L Time" value="5"><br/><br/>
-            E/W Left Arrow (sec)<input type="number" id="state4" size="24" placeholder="E/W L Time" value="5"><br/><br/>
+            <div style="position: absolute; top: 5px">
+                N/S Green (sec)<input type="number" id="state1" size="24" placeholder="15" value="15"><br/><br/>
+                E/W Green (sec)<input type="number" id="state2" size="24" placeholder="15" value="15"><br/><br/>
+                N/S Left Arrow (sec)<input type="number" id="state3" size="24" placeholder="5" value="5"><br/><br/>
+                E/W Left Arrow (sec)<input type="number" id="state4" size="24" placeholder="5" value="5"><br/><br/>
+            </div>
         </div>
         <div class="overlay-table" style="bottom: 9px; right: 6px;">
-            <div style="text-align: left;">
+            <div style="text-align: left; position: absolute;top: 5px; left: 5px">
                 <b>Lane Availability</b><br>
                 <ul style="list-style-type: none">
-                    <li><input type="radio" name="lanes" id="allLanesOpen"><b>All Lanes Open</b></li>
-                    <li><input type="radio" name="lanes" id="quarterClosure"><b>Quarter Lane Closure</b></li>
-                    <li><input type="radio" name="lanes" id="halfClosure"><b>Half Lane Closure</b></li>
+                    <li><input type="radio" name="lanes" id="allLanesOpen" checked><b>All Lanes Open</b></li>
+                    <li><input type="radio" name="lanes" id="quarterClosure"><b>Quarter Lanes Closure</b></li>
+                    <li><input type="radio" name="lanes" id="halfClosure"><b>Half Lanes Closure</b></li>
                 </ul>
                 <b>Weather</b>
                 <ul style="list-style-type: none">
-                    <li><input type="radio" name="weather" id="clearWeather"><b>Clear Weather</b></li>
+                    <li><input type="radio" name="weather" id="clearWeather" checked><b>Clear Weather</b></li>
                     <li><input type="radio" name="weather" id="rainyWeather"><b>Rainy Weather</b></li>
                     <li><input type="radio" name="weather" id="snowyWeather"><b>Snowy Weather</b></li>
                 </ul>
@@ -116,20 +117,9 @@
 
 
             <br/>
-            <br>
-            <button type="button" onclick="submitClicked()">Verify Traffic Timings</button>
+
             <button type="button" onclick="updateSim()">Update Charts</button>
             <br/>
-        </div>
-        <hr width="450px" align="left"/>
-        <h4>Enter cycle time:</h4>
-        <div id="cycle_time">
-
-        </div>
-        <p id="cycle_time_warning"></p>
-        <hr width="450px" align="left"/>
-        <div id="features">
-
         </div>
     </div>
     <div style="display: flex;flex-direction: row; flex: 1;align-items: center">

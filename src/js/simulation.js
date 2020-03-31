@@ -54,21 +54,21 @@ function getTrafficModelFromInputs() {
     modelInit.EW_Green = Number(document.getElementById("state2").value);
     modelInit.EW_Left = Number(document.getElementById("state4").value);
 
-    if (document.getElementById("feature1").checked) {
-        modelInit = modifyTraffic(modelInit, .67, NaN, NaN)
-    } else if (document.getElementById("feature2").checked) {
-        modelInit = modifyTraffic(modelInit, .33, NaN, NaN)
-    } else if (document.getElementById("feature3").checked) {
-        modelInit = modifyTraffic(modelInit, .55, NaN, NaN)
-    } else if (document.getElementById("feature4").checked) {
-        modelInit = modifyTraffic(modelInit, .75, 6, 3)
-    } else if (document.getElementById("feature5").checked) {
-        modelInit = modifyTraffic(modelInit, .80, 5.5, 2.5)
-    } else if (document.getElementById("feature6").checked) {
-        modelInit = modifyTraffic(modelInit, .3015, NaN, NaN)
+    if (document.getElementById("allLanesOpen").checked) {
+        // Do nothing
+    } else if (document.getElementById("quarterClosure").checked) {
+        modelInit.environmentModifer = 0.75;
+    } else if (document.getElementById("halfClosure").checked) {
+        modelInit.environmentModifer = 0.5;
     }
 
-    console.log(modelInit);
+    if (document.getElementById("clearWeather").checked) {
+        // Do nothing
+    } else if (document.getElementById("rainyWeather").checked) {
+        modelInit.timeToPeak = 10;
+    } else if (document.getElementById("snowyWeather").checked) {
+        modelInit.timeToPeak = 12;
+    }
 
     return new TrafficModel(modelInit);
 }
@@ -80,18 +80,24 @@ function startSimulation() {
 }
 
 function updateSim(direction) {
-    if (document.getElementById("state1").value != null && document.getElementById("state1").value > 0 &&
-        document.getElementById("state2").value != null && document.getElementById("state2").value > 0 &&
-        document.getElementById("state3").value != null && document.getElementById("state3").value > 0 &&
-        document.getElementById("state4").value != null && document.getElementById("state4").value > 0) {
-        document.getElementById("cycle_time_warning").innerText = null;
-
-        let trafficModel = getTrafficModelFromInputs()
-        updateFlowAmounts(trafficModel);
-        updateCharts(trafficModel, direction);
-    } else {
-        document.getElementById("cycle_time_warning").innerText = "Error: Must supply cycle times.";
+    if(!verifyPercentages())
+        alert("Percentages do not add up to 100 percent, please try again");
+    else {
+        if (document.getElementById("state1").value != null && document.getElementById("state1").value > 0 &&
+            document.getElementById("state2").value != null && document.getElementById("state2").value > 0 &&
+            document.getElementById("state3").value != null && document.getElementById("state3").value > 0 &&
+            document.getElementById("state4").value != null && document.getElementById("state4").value > 0) {
+            if(direction != null) {
+                window.lastDirection = direction;
+            }
+            let trafficModel = getTrafficModelFromInputs();
+            updateFlowAmounts(trafficModel);
+            updateCharts(trafficModel, window.lastDirection);
+        } else {
+            alert("Error: Must supply cycle times");
+        }
     }
+
 }
 
 /**

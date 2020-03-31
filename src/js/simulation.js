@@ -16,24 +16,56 @@ function submitClicked() {
 }
 
 function updateFlowAmounts(trafficModel) {
+    let verify = trafficModel.verify();
     let ns_left_in = (trafficModel.NS_rate * trafficModel.leftFlow * trafficModel.getTotalCycleTime());
     let ns_left_out = (trafficModel.getTotalCarOnGreenCycle(trafficModel.NS_Left));
     document.getElementById("ns_left_in").innerHTML = ns_left_in.toFixed(0);
     document.getElementById("ns_left_out").innerHTML = ns_left_out.toFixed(0);
-    if(ns_left_in > ns_left_out) {
+    if(!verify.NS_Left) {
         document.getElementById("ns_left_in").classList.add('error');
+        document.getElementById("state3").classList.add('error-b');
     } else {
         document.getElementById("ns_left_in").classList.remove('error');
+        document.getElementById("state3").classList.remove('error-b');
     }
 
     document.getElementById("ns_green_in").innerHTML = (trafficModel.NS_rate * trafficModel.greenFlow * trafficModel.getTotalCycleTime()).toFixed(0).toString();
     document.getElementById("ns_green_out").innerHTML = (trafficModel.getTotalCarOnGreenCycle(trafficModel.NS_Green)).toFixed(0).toString();
+    if(!verify.NS_Green) {
+        document.getElementById("ns_green_in").classList.add('error');
+        document.getElementById("state1").classList.add('error-b');
+    } else {
+        document.getElementById("ns_green_in").classList.remove('error');
+        document.getElementById("state1").classList.remove('error-b');
+    }
 
     document.getElementById("ew_left_in").innerHTML = (trafficModel.EW_rate * trafficModel.leftFlow * trafficModel.getTotalCycleTime()).toFixed(0).toString();
     document.getElementById("ew_left_out").innerHTML = (trafficModel.getTotalCarOnGreenCycle(trafficModel.EW_Left)).toFixed(0).toString();
+    if(!verify.EW_Left) {
+        document.getElementById("ew_left_in").classList.add('error');
+        document.getElementById("state4").classList.add('error-b');
+    } else {
+        document.getElementById("ew_left_in").classList.remove('error');
+        document.getElementById("state4").classList.remove('error-b');
+    }
 
     document.getElementById("ew_green_in").innerHTML = (trafficModel.EW_rate * trafficModel.greenFlow * trafficModel.getTotalCycleTime()).toFixed(0).toString();
     document.getElementById("ew_green_out").innerHTML = (trafficModel.getTotalCarOnGreenCycle(trafficModel.EW_Green)).toFixed(0).toString();
+    if(!verify.EW_Green) {
+        document.getElementById("ew_green_in").classList.add('error');
+        document.getElementById("state2").classList.add('error-b');
+    } else {
+        document.getElementById("ew_green_in").classList.remove('error');
+        document.getElementById("state2").classList.remove('error-b');
+    }
+
+
+
+    if(verify.NS_Left && verify.NS_Green && verify.EW_Left && verify.EW_Green) {
+        document.getElementById("out_table").classList.remove('error-b');
+    } else {
+        document.getElementById("out_table").classList.add('error-b');
+    }
 }
 
 function getTrafficModelFromInputs() {

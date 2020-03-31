@@ -112,31 +112,23 @@
 
 </div>
 <div style="display: flex;flex-direction: column;flex-grow: 1; align-content: center">
-    <div id="all_inputs">
-        <div id="variables">
-
-
-            <br/>
-
-            <button type="button" onclick="updateSim()">Update Charts</button>
-            <br/>
-        </div>
-    </div>
     <div style="display: flex;flex-direction: row; flex: 1;align-items: center">
         <div style="display: flex;flex-direction: column; flex: 1;align-items: center">
             <div style="width: 90%;">
                 <canvas id="Chart_Canvas"></canvas>
             </div>
-            <div>
-                <button type="button" onclick="updateSim('ns_left')">N/S Left</button>
-                <button type="button" onclick="updateSim('ns_green')">N/S Green</button>
-                <button type="button" onclick="updateSim('ew_left')">E/W Left</button>
-                <button type="button" onclick="updateSim('ew_green')">E/W Green</button>
+            <div class="row">
+                <button type="button" onclick="updateSim('ns_left')" class="flex">N/S Left</button>
+                <button type="button" onclick="updateSim('ns_green')" class="flex">N/S Green</button>
+                <button type="button" onclick="updateSim('ew_left')" class="flex">E/W Left</button>
+                <button type="button" onclick="updateSim('ew_green')" class="flex">E/W Green</button>
+                <div style="width: 20px" class="flex"></div>
+                <button type="button" onclick="updateSim()" class="flex">Update Sim</button>
             </div>
         </div>
 
-        <table>
-            <caption>Cars</caption>
+        <table id="out_table" style="border-width: 2px">
+            <caption>Cars through intersection</caption>
             <tr>
                 <th></th>
                 <th>N/S Left</th>

@@ -46,7 +46,7 @@ class TrafficModel {
             MI.reactionTime = 2;
         }
         if (typeof(MI.peakFlow) === 'undefined') {
-            MI.peakFlow = 70;
+            MI.peakFlow = 1.5;
         }
         if (typeof(MI.timeToPeak) === 'undefined') {
             MI.timeToPeak = 20;
@@ -87,7 +87,7 @@ class TrafficModel {
         this.NS_Left_Start = 0;
         this.NS_Left_End =  this.NS_Left_Start + this.NS_Left;
         this.NS_Green_Start = this.NS_Left_End;
-        this.NS_Green_End = this.NS_Green_Start + this.NS_Green
+        this.NS_Green_End = this.NS_Green_Start + this.NS_Green;
         this.EW_Left_Start = this.NS_Green_End;
         this.EW_Left_End = this.EW_Left_Start + this.EW_Left;
         this.EW_Green_Start = this.EW_Left_End;

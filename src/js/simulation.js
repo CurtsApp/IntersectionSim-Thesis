@@ -75,12 +75,12 @@ function getTrafficModelFromInputs() {
     modelInit.leftFlow = Number(document.getElementById("x1_L").value)/100.0;
     modelInit.reactionTime = 2;
     modelInit.environmentModifer = 1;
-    modelInit.peakFlow = 70;
-    modelInit.timeToPeak = 5; // This number will probably be between 5-20. Think of this as a speed coefficent. It shifts the whole curve. Smaller number is more acceleration
-    modelInit.X1 = Number(document.getElementById("input1").value);
-    modelInit.X3 = Number(document.getElementById("input3").value);
-    modelInit.X2 = Number(document.getElementById("input2").value);
-    modelInit.X4 = Number(document.getElementById("input4").value);
+    modelInit.peakFlow = 1.5;
+    modelInit.timeToPeak = 20; // This number will probably be between 5-20. Think of this as a speed coefficent. It shifts the whole curve. Smaller number is more acceleration
+    modelInit.X1 = Number(document.getElementById("input1").value)/60.0;
+    modelInit.X3 = Number(document.getElementById("input3").value)/60.0;
+    modelInit.X2 = Number(document.getElementById("input2").value)/60.0;
+    modelInit.X4 = Number(document.getElementById("input4").value)/60.0;
     modelInit.NS_Green = Number(document.getElementById("state1").value);
     modelInit.NS_Left = Number(document.getElementById("state3").value);
     modelInit.EW_Green = Number(document.getElementById("state2").value);
@@ -97,9 +97,9 @@ function getTrafficModelFromInputs() {
     if (document.getElementById("clearWeather").checked) {
         // Do nothing
     } else if (document.getElementById("rainyWeather").checked) {
-        modelInit.timeToPeak = 10;
+        modelInit.timeToPeak = 25;
     } else if (document.getElementById("snowyWeather").checked) {
-        modelInit.timeToPeak = 12;
+        modelInit.timeToPeak = 29;
     }
 
     return new TrafficModel(modelInit);
@@ -108,6 +108,7 @@ function getTrafficModelFromInputs() {
  * Begins the global simulation time.
  */
 function startSimulation() {
+    window.lastDirection = 'ns_green';
     updateSim();
 }
 

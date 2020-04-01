@@ -177,7 +177,7 @@ function drawCharts(trafficModel) {
                     ticks: {
                         beginAtZero: true,
                         max: trafficModel.peakFlow,
-                        stepSize: 10
+                        stepSize: 0.5
                     }
                 }]
             }
